@@ -1,0 +1,107 @@
+.App {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.90)!important;
+  border-style: solid;
+  border-radius: 0px;
+  border-color: black;
+  border-width: 1px;
+  border-left: 0px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #27292D !important;
+  color: rgba(255, 255, 255, 0.90); 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin); 
+}
+
+.App-body {
+  background-color:  rgba(255, 255, 255, 0.90)!important;
+  color: #27292D; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin); 
+}
+ 
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  text-align: center; 
+}
+
+.nav-link {
+   padding: 5%;
+   float: right;
+   border-radius: 10px;
+   border-color: #333;
+   background-color: #333;
+   color: white;
+   text-decoration: none;
+   cursor: pointer;
+   margin-left: 25%;
+
+}
+.menu-header {
+   padding: 0 8px;
+ display: flex;
+}
+
+.boton-header {
+ padding-left: 50%;
+ display: flex;
+ padding-top: 2%;
+ padding-bottom: 2%;
+}
+
+.a-header { 
+ display: flex;
+ padding-top: 2%;
+ padding-bottom: 2%;
+} 
+.nav-menu { 
+ float: right;
+ position: fixed;
+ top: auto;
+ z-index: 200;
+ margin-top: -10px;
+ padding-top: 50px;
+ padding-bottom: 50px;
+ -webkit-box-orient: vertical;
+ -webkit-box-direction: normal;
+ -webkit-flex-direction: column;
+ -ms-flex-direction: column;
+ flex-direction: column;
+ -webkit-box-pack: center;
+ -webkit-justify-content: center;
+ -ms-flex-pack: center;
+ justify-content: center;
+ -webkit-box-align: end;
+ -webkit-align-items: flex-end;
+ -ms-flex-align: end;
+ align-items: flex-end; 
+}
