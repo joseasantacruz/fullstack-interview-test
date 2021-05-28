@@ -10,6 +10,8 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://127.0.0.1",
+    "http://127.0.0.1:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +35,7 @@ def read_root():
     return {    "branches": branches }
 
 @app.get("/branch/{name}/commits")
-def read_item(name: str):
+def read_item(name: str): 
     repo.git.checkout(name)
     commits = []
     id,author,date,message='','','',''
@@ -56,19 +58,19 @@ def read_item(name: str):
 
 @app.get("/commit/{hash}")
 def read_item(hash: str):
-    commit = []
+    commit = ''
     line_count=0
     changed_count=0
     id,author,date,message='','','',''
     for line in repo.git.show(hash).split('\n'):
         if line!='':
-            if (line_count==0):
+            if (line_count==0 and line.find('commit ')==0):
                 line_count+=1
                 id=line.strip('commit').strip(' ')
-            elif(line_count==1):
+            elif(line_count==1 and line.find('Author: ')==0):
                 line_count+=1
                 author=line.strip('Author:').strip(' ')
-            elif(line_count==2):
+            elif(line_count==2 and line.find('Date: ')==0):
                 line_count+=1
                 date=line.strip('Date:').strip(' ')
             elif(line_count==3):
@@ -76,5 +78,7 @@ def read_item(hash: str):
                 message=line.strip(' ')
             elif (line.find('diff ')==0):
                 changed_count+=1
-    commit.append({"Id": id,"Author": author, "Date": date, "Message": message,"Files changed":changed_count})
+    if (changed_count==0):
+        changed_count=1
+    commit={"Id": id,"Author": author, "Date": date, "Message": message,"Changes":changed_count}
     return {"commit": commit}
