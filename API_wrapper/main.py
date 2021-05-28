@@ -54,6 +54,8 @@ def read_item(name: str):
         if (id!='' and author!='' and date!='' and message!=''):                    
             commits.append({"Id": id,"Author": author, "Date": date, "Message": message})
             id,author,date,message='','','',''
+    if (name!='master'):
+        repo.git.checkout('master')
     return {"commits": commits}
 
 @app.get("/commit/{hash}")
