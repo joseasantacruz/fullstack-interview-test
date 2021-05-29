@@ -127,7 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# React packages
-web-app/package-lock.json
-web-app/package.json

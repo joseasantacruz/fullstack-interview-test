@@ -10,37 +10,52 @@ For more information visit the [original repository.](https://github.com/FlatDig
 
 ## Repo
 To clone the repository:
--Install git dependencies
-> sudo apt install git
--We need to download the repository.
-> git clone https://github.com/joseasantacruz/fullstack-interview-test.git
+- Install git dependencies
+```
+sudo apt install git
+```
+- We need to download the repository.
+```
+git clone https://github.com/joseasantacruz/fullstack-interview-test.git
+```
 
 ## Configure BackEnd service 
 To configure BackEnd service we need to:
 - Go to project directory
-> cd fullstack-interview-test
+```
+cd fullstack-interview-test
+```
 - Install the database
-> sudo apt install postgresql postgresql-contrib
+```
+sudo apt install postgresql postgresql-contrib
+```
 - Install some requirements
-> cd API_wrapper
-> sudo apt install python3-pip
-> pip install -r requirements.txt
-> sudo apt install uvicorn
-> sudo pip install fastapi
-> sudo pip install uvicorn
+```
+cd API_wrapper
+sudo apt install python3-pip
+pip install -r requirements.txt
+sudo apt install uvicorn
+sudo pip install fastapi
+sudo pip install uvicorn
+```
 - Connect to database and create a new role
-> sudo su - postgres
-> psql
-> CREATE ROLE flat_user WITH LOGIN PASSWORD 'flattest';
-> ALTER ROLE flat_user CREATEDB;
-> \q
+```
+sudo su - postgres
+psql
+CREATE ROLE flat_user WITH LOGIN PASSWORD 'flattest';
+ALTER ROLE flat_user CREATEDB;
+\q
+```
 - With the new role create a new database 
-> psql -h localhost -p 5432 -d postgres -U flat_user
-> CREATE DATABASE flat_test; 
-> \q
+```
+psql -h localhost -p 5432 -d postgres -U flat_user
+CREATE DATABASE flat_test; 
+\q
+```
 - Connect to the new database and create a table
-> psql -h localhost -p 5432 -d flat_test -U flat_user
-> CREATE TABLE pulls (
+```
+psql -h localhost -p 5432 -d flat_test -U flat_user
+CREATE TABLE pulls (
     id serial PRIMARY KEY,
     author varchar (50),
     title varchar (100),
@@ -48,24 +63,27 @@ To configure BackEnd service we need to:
     status varchar(10),
     base  varchar (100),
     compare varchar (100));
->\q
+\q
+```
 - In a new terminal start the server
-> uvicorn main:app --reload
-
+```
+uvicorn main:app --reload
+```
 ## Configure FrontEnd service 
 To configure FrontEnd service we need to:
 - Go to FrontEnd directory
-> cd fullstack-interview-test/web-app
+```
+cd fullstack-interview-test/web-app
+```
 - Install some requirements
-> sudo apt install npm
-> npm install --save react
-> npm install --save react-router-dom
-> npm install --save react-dom
-> npm install --save react-loader-spinner
-> npm install --save react-scripts
+```
+sudo apt install npm
+npm install
+```
 - Start the server
-> npm start
-
+```
+npm start
+```
 ## Go to the Web App
 Now lets go to the Web App.
 Open in your browser the [Web App at http://localhost:3000.](http://localhost:3000/)
