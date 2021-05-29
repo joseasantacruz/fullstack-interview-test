@@ -7,10 +7,6 @@ export function CommitDetails(props) {
     const {CommitHash,CommitMessage} = useParams()
     const [result, setResult] = useState()
     const [isFetchFinished, setIsFetchFinished] = useState(false);
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow', 
-      };     
     useEffect(() =>{
         doQuery(CommitHash)
             .then(d => {setResult(d?.commit);setIsFetchFinished(true);console.log('commit: ', d?.commit);})

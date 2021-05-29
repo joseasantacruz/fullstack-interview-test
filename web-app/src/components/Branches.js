@@ -25,7 +25,7 @@ function GetBranches(props) {
     console.log("branches list: ", props.list)   
     return <div> 
         { props.list.map(branch  =>
-        <h4 style={{marginLeft:'10%'}}>
+        <h4 key={branch} style={{marginLeft:'10%'}}>
             <a className="App-link"
             href={'http://127.0.0.1:3000/commits/'+branch}>{branch} </a> 
         </h4> 

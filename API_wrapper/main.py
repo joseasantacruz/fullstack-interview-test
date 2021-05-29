@@ -1,25 +1,30 @@
-from fastapi import FastAPI
-from typing import Optional
+from fastapi import FastAPI 
+from db.db import metadata, database, engine
+from models.pulls import pulls
 from git import Repo
 from fastapi.middleware.cors import CORSMiddleware
 
 
 repo = Repo('../')
 
-app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "http://127.0.0.1",
-    "http://127.0.0.1:3000",
-]
+app = FastAPI() 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
+
+app.include_router(pulls)
 
 @app.get("/")
 def read_root():
@@ -27,15 +32,15 @@ def read_root():
 
 
 @app.get("/branches")
-def read_root():
+def read_branches():
     branches = []
     for branch in repo.git.branch('-r').split('\n'):
         if branch.find('HEAD')<0:
             branches.append(branch.strip(' ')[branch.find('/')-1:])
-    return {    "branches": branches }
+    return {"branches": branches }
 
 @app.get("/branch/{name}/commits")
-def read_item(name: str): 
+def read_commits(name: str): 
     repo.git.checkout(name)
     commits = []
     id,author,date,message='','','',''
@@ -59,7 +64,7 @@ def read_item(name: str):
     return {"commits": commits}
 
 @app.get("/commit/{hash}")
-def read_item(hash: str):
+def read_commit(hash: str):
     commit = ''
     line_count=0
     changed_count=0
@@ -84,3 +89,25 @@ def read_item(hash: str):
         changed_count=1
     commit={"Id": id,"Author": author, "Date": date, "Message": message,"Changes":changed_count}
     return {"commit": commit}
+
+@app.get("/merge/{base}/{compare}")
+def do_merge(base: str,compare: str):
+    branches = []
+    for branch in repo.git.branch('-r').split('\n'):
+        if branch.find('HEAD')<0:
+            branches.append(branch.strip(' ')[branch.find('/')-1:])
+    if base not in branches:
+        merge_message='Branch '+base+' is not a valid branch in the repo.'
+        success=False
+    elif compare not in branches:
+        merge_message='Branch '+compare+' is not a valid branch in the repo.'
+        success=False
+    else:
+        try:
+            repo.git.checkout(base)
+            success=True
+            merge_message=repo.git.merge(compare)
+        except :
+            success=False
+            merge_message="An error occurred when do the merge between branches "+base+" and "+compare+"."
+    return {"success":success,"merge_message": merge_message}

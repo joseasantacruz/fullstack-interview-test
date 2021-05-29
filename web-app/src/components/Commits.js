@@ -25,7 +25,7 @@ export function Commits(props) {
 function GetCommits(props) {
     console.log("commits list: ", props.list)   
     return <div> 
-        { props.list.map(commit  =><div>
+        { props.list.map(commit  =><div key={commit.Id}>
             <p style={{marginLeft:'10%'}}> Commit message: <a className="App-link"
                 href={'http://127.0.0.1:3000/commit/'+commit.Id+'/'+commit.Message}>{commit.Message} </a>     </p> 
                 <p style={{marginLeft:'10%'}}> Author : {commit.Author}    </p> 
