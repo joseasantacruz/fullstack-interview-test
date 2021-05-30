@@ -95,12 +95,9 @@ To run a the tests:
 ```
 cd fullstack-interview-test/API_wrapper
 sudo apt install python-pytest
+pip install pytest
 ```
 - Run the tests
-```
-pytest
-```
-
 ```
 pytest
 ```
