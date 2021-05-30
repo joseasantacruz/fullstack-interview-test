@@ -87,3 +87,20 @@ npm start
 ## Go to the Web App
 Now lets go to the Web App.
 Open in your browser the [Web App at http://localhost:3000.](http://localhost:3000/)
+
+
+## Test code
+To run a the tests:
+- Go to project directory
+```
+cd fullstack-interview-test/API_wrapper
+sudo apt install python-pytest
+```
+- Run the tests
+```
+pytest
+```
+
+```
+pytest
+```
